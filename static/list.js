@@ -1,9 +1,13 @@
 const options = {
+  page: 9,
+  pagination: {
+    outerWindow: 1,
+  },
   valueNames: ['title', { name: 'link', attr: 'href' }],
   item: `
-    <div>
+    <h3>
       <a class="title link"></a>
-    </div>
+    </h3>
   `.trim(),
 }
 

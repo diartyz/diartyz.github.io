@@ -1,0 +1,14 @@
+body {
+  background: #fdf6e3;
+  padding: 1em;
+}
+
+.title {
+  color: #333;
+  font-family: 'Bree Serif', serif;
+}
+
+.pagination li {
+  display: inline-block;
+  padding: .1em;
+}
