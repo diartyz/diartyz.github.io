@@ -1,0 +1,25 @@
+{
+  "name": "diartyz.github.io",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node lib/md2html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diartyz/diartyz.github.io.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diartyz/diartyz.github.io/issues"
+  },
+  "homepage": "https://github.com/diartyz/diartyz.github.io#readme",
+  "devDependencies": {
+    "bluebird": "^3.5.1",
+    "fs-extra": "^7.0.0",
+    "marked": "^0.4.0"
+  }
+}
