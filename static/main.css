@@ -3,12 +3,24 @@ body {
   padding: 1em;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Bree Serif', serif;
+}
+
+.markdown-body pre {
+  background: #1d1f21;
+}
+
 .title {
   color: #333;
-  font-family: 'Bree Serif', serif;
 }
 
 .pagination li {
   display: inline-block;
-  padding: .1em;
+  padding: 0.1em;
 }
