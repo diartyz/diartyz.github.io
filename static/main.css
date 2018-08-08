@@ -15,3 +15,25 @@ h6 {
 .title {
   color: #333;
 }
+
+.date::before,
+.date::after {
+  content: '·';
+}
+
+.date {
+  display: inline-block;
+  font-size: .7em;
+  color: #666;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.2em;
+  border-radius: 0.25em;
+  font-size: 0.5em;
+  background-color: #ccc;
+  color: #fff;
+  line-height: 1em;
+  vertical-align: middle;
+}
