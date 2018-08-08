@@ -28,12 +28,12 @@ h6 {
 }
 
 .tag {
+  font-size: 0.5em;
+  color: #fff;
+  background-color: #ccc;
   display: inline-block;
   padding: 0.2em;
-  border-radius: 0.25em;
-  font-size: 0.5em;
-  background-color: #ccc;
-  color: #fff;
+  border-radius: 0.2em;
   line-height: 1em;
   vertical-align: middle;
 }

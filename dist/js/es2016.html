@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><title>es2016</title></head><body><h1 id="es2016">ES2016</h1><hr><h2 id="array-prototype-includes-">Array.prototype.includes()</h2><pre><code class="language-javascript">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].includes(&#39;a&#39;)
+// true
+[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].includes(&#39;d&#39;)
+// false</code></pre><ul><li>includes() 可识别 NaN，indexOf() 不行</li></ul><pre><code class="language-javascript">[NaN].includes(NaN)
+// true
+[NaN].indexOf(NaN)
+// -1</code></pre><ul><li>不可区分 +0/-0</li></ul><pre><code class="language-javascript">[-0].includes(+0)
+// true</code></pre><ul><li>Typed Arrays 也有 includes()</li></ul><pre><code class="language-javascript">const tarr = Uint8Array.of(12, 5, 3)
+console.log(tarr.includes(5)) // true</code></pre><hr><h2 id="-">指数（幂）运算符 <code>**</code></h2><pre><code class="language-javascript">6 ** 2
+// 36
+
+const squared = 3 ** 2
+// 9
+
+let num = 3
+num **= 2;
+// 9
+
+function dist(x, y) {
+  return Math.sqrt(x**2 + y**2)
+}</code></pre><ul><li>相当于 Math.pow(x, y)</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script></body></html>

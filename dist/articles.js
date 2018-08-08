@@ -1,1 +1,1 @@
-const articles = [{"title":"test","tag":"test","date":1533641453581,"link":"test/test.html"}]
+const articles = [{"title":"es2016","tag":"js","date":1533720260828,"link":"js/es2016.html"},{"title":"test","tag":"test","date":1533641453581,"link":"test/test.html"}]
