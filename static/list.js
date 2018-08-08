@@ -9,9 +9,9 @@ const options = {
   `.trim(),
 }
 
-const values = ['test'].map(title => ({
-  title,
-  link: `dist/${title}.html`,
+const values = articles.map(article => ({
+  title: article.name,
+  link: `dist/${article.link}`,
 }))
 
 const blogList = new List('blog-list', options, values)
