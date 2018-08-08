@@ -3,17 +3,9 @@ body {
   padding: 1em;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Bree Serif', serif;
-}
-
 .title {
   color: #333;
+  font-family: 'Bree Serif', serif;
 }
 
 .date::before,

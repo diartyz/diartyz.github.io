@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><title>es2017</title></head><body><h1 id="es2017-">ES2017 新增内容</h1><hr><h2 id="async">Async</h2><pre><code class="language-javascript">async function foo() {}
+const foo = async function () {}
+let obj = { async foo() {} }
+const foo = async () =&gt; {}</code></pre><ul><li>Async 总是返回 Promises</li></ul><pre><code class="language-javascript">async function asyncFunc() {
+  return 123
+}
+
+asyncFunc()
+  .then(x =&gt; console.log(x))
+// 123
+
+async function asyncFunc() {
+  throw new Error(&#39;Problem!&#39;)
+}
+
+asyncFunc()
+  .catch(err =&gt; console.log(err))
+// Error: Problem!</code></pre><ul><li>并行 Async</li></ul><pre><code class="language-javascript">async function asyncFunc() {
+  const [result1, result2] = await Promise.all([
+    otherAsyncFunc1(),
+    otherAsyncFunc2(),
+  ])
+  console.log(result1, result2)
+}
+
+// Equivalent to:
+function asyncFunc() {
+  return Promise.all([
+    otherAsyncFunc1(),
+    otherAsyncFunc2(),
+  ])
+  .then([result1, result2] =&gt; {
+    console.log(result1, result2)
+  })
+}</code></pre><ul><li>错误处理</li></ul><pre><code class="language-javascript">async function asyncFunc() {
+  try {
+    await otherAsyncFunc()
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// Equivalent to:
+function asyncFunc() {
+  return otherAsyncFunc()
+    .catch(err =&gt; {
+      console.error(err)
+    })
+}</code></pre><hr><h2 id="sharedarraybuffer-atomics">SharedArrayBuffer &amp; Atomics</h2><ul><li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer</a></li><li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Atomics">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Atomics</a></li></ul><hr><h2 id="object-entries-and-object-values-">Object.entries() and Object.values()</h2><pre><code class="language-javascript">Object.entries({ one: 1, two: 2 })
+// [ [&#39;one&#39;,1], [&#39;two&#39;,2] ]
+
+Object.values({ one: 1, two: 2 })
+// [ 1, 2 ]</code></pre><ul><li>symbols 会被忽略</li></ul><pre><code class="language-javascript">Object.entries({ [Symbol()]: 123, foo: &#39;abc&#39; })
+// [ [ &#39;foo&#39;, &#39;abc&#39; ] ]</code></pre><hr><h2 id="-padstart-padend">字符串填充 padStart/padEnd</h2><pre><code class="language-javascript">&#39;x&#39;.padStart(5, &#39;ab&#39;)
+// &#39;ababx&#39;
+&#39;x&#39;.padEnd(5, &#39;ab&#39;)
+// &#39;xabab&#39;</code></pre><ul><li>参数为空时，会填充空格</li></ul><pre><code class="language-javascript">&#39;x&#39;.padStart(3)
+// &#39;  x&#39;</code></pre><hr><h2 id="object-getownpropertydescriptor-">Object.getOwnPropertyDescriptor()</h2><pre><code>const obj = {
+    [Symbol(&#39;foo&#39;)]: 123,
+    get bar() { return &#39;abc&#39; },
+}
+console.log(Object.getOwnPropertyDescriptors(obj))
+
+// Output:
+// { [Symbol(&#39;foo&#39;)]:
+//    { value: 123,
+//      writable: true,
+//      enumerable: true,
+//      configurable: true },
+//   bar:
+//    { get: [Function: bar],
+//      set: undefined,
+//      enumerable: true,
+//      configurable: true } }</code></pre><ul><li>copy properties with non-default attributes</li></ul><pre><code class="language-javascript">const source = {
+  set foo(value) {
+    console.log(value)
+  }
+}
+console.log(Object.getOwnPropertyDescriptor(source, &#39;foo&#39;))
+// { get: undefined,
+//   set: [Function: foo],
+//   enumerable: true,
+//   configurable: true }
+
+const target1 = {}
+Object.assign(target1, source)
+console.log(Object.getOwnPropertyDescriptor(target1, &#39;foo&#39;))
+// { value: undefined,
+//   writable: true,
+//   enumerable: true,
+//   configurable: true }
+
+const target2 = {}
+Object.defineProperties(target2, Object.getOwnPropertyDescriptors(source))
+console.log(Object.getOwnPropertyDescriptor(target2, &#39;foo&#39;))
+// { get: undefined,
+//   set: [Function: foo],
+//   enumerable: true,
+//   configurable: true }</code></pre><ul><li>clone Object</li></ul><pre><code class="language-javascript">const clone = Object.create(
+  Object.getPrototypeOf(obj), // 新对象原型
+  Object.getOwnPropertyDescriptors(obj), //新对象属性集合
+)</code></pre><ul><li>一个属性描述符由下面属性当中的某些组成：<ul><li>value: 该属性的值(仅针对数据属性描述符有效)</li><li>get: 获取该属性的访问器函数（getter）。如果没有访问器， 该值为undefined。(仅针对包含访问器或设置器的属性描述有效)</li><li>set: 获取该属性的设置器函数（setter）。 如果没有设置器， 该值为undefined。(仅针对包含访问器或设置器的属性描述有效)</li><li>writable: 当且仅当属性的值可以被改变时为true。(仅针对数据属性描述有效)</li><li>enumerable: 当且仅当指定对象的属性可以被枚举出时，为 true。</li><li>configurable: 当且仅当指定对象的属性描述可以被改变或者属性可被删除时，为true。</li></ul></li></ul><hr><h2 id="-">函数参数结尾逗号</h2><pre><code>function foo(
+    param1,
+    param2,
+) {}
+
+foo(
+    &#39;abc&#39;,
+    &#39;def&#39;,
+)</code></pre></body></html>
