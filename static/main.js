@@ -13,7 +13,9 @@ const options = {
 
 articles.forEach(article => {
   article.link = 'dist/' + article.link
-  article.date = window.dateFns.format(article.date, 'MMMM DD,YYYY')
+  article.date = window.dateFns.format(article.mtime, 'MMMM DD,YYYY')
 })
 
 const blogList = new List('blog-list', options, articles)
+
+blogList.sort('mtime', { order: 'desc' })
