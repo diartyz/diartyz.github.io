@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><title>获取页面元素的位置</title></head><body><h1 id="-">获取页面元素的位置</h1><hr><h2 id="-">相关属性</h2><ul><li>clientHeight/clientWidth 属性指元素的内容部分再加上padding的所占据的视觉面积，不包括 border 和滚动条占用的空间</li><li>scrollHeight/scrollWidth 属性指包含滚动条在内的该元素的视觉面积</li><li>offsetHeight/offsetWidth 属性指包含滚动条和 border 在内的该元素的视觉面积</li><li>offsetTop/offsetLeft 属性表示该元素的左上角与父容器（offsetParent对象）左上角的距离</li><li>scrollTop/scrollLeft 属性表示该元素水平/垂直滚动的距离</li><li>clientTop/clientLeft 属性表示该元素水平/垂直距边框外围的距离</li></ul><hr><h2 id="-">相关方法</h2><p>getBoundingClientRect(), 它返回一个对象，其中包含了left、right、top、bottom四个属性，分别对应了该元素的左上角和右下角相对于浏览器窗口（viewport）左上角的距离。</p><hr><h2 id="-api">相关 API</h2><pre><code class="language-javascript">const io = new IntersectionObserver(callback, option)
+io.observe(document.getElementById(&#39;example&#39;))
+io.unobserve(element)
+io.disconnect()</code></pre><ul><li>callback 参数<ul><li>callback一般会触发两次。一次是目标元素刚刚进入视口（开始可见），另一次是完全离开视口（开始不可见）。</li><li>callback函数的参数（entries）是一个数组，每个成员都是一个IntersectionObserverEntry对象。举例来说，如果同时有两个被观察的对象的可见性发生变化，entries数组就会有两个成员。</li></ul></li><li>IntersectionObserverEntry 对象提供目标元素的信息，一共有六个属性。<ul><li>time：可见性发生变化的时间，是一个高精度时间戳，单位为毫秒</li><li>target：被观察的目标元素，是一个 DOM 节点对象</li><li>rootBounds：根元素的矩形区域的信息，getBoundingClientRect()方法的返回值，如果没有根元素（即直接相对于视口滚动），则返回null</li><li>boundingClientRect：目标元素的矩形区域的信息</li><li>intersectionRect：目标元素与视口（或根元素）的交叉区域的信息</li><li>intersectionRatio：目标元素的可见比例，即intersectionRect占boundingClientRect的比例，完全可见时为1，完全不可见时小于等于0</li></ul></li></ul><pre><code class="language-javascript">{
+  time: 3893.92,
+  rootBounds: ClientRect {
+    width: 920
+    height: 1024,
+    top: 0,
+    bottom: 920,
+    left: 0,
+    right: 1024,
+  },
+  boundingClientRect: ClientRect {
+     // ...
+  },
+  intersectionRect: ClientRect {
+    // ...
+  },
+  intersectionRatio: 0.54,
+  target: element
+}</code></pre></body></html>
