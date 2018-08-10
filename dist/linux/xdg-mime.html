@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><title>xdg-mime</title></head><body><h1 id="xdg-mime">xdg-mime</h1><hr><h2 id="xdg-open">xdg-open</h2><p>很多 linux 程序使用 xdg-open 来打开文件，xdg-open 通过文件的 mime 类型来判断应该用什么程序打开。 xdg-mime 可以配置 mime 类型对应的程序，以下为配置文件的位置：</p><pre><code>~/.config/mimeapps.list
+/etc/xdg/mimeapps.list
+~/.local/share/applications/mimeapps.list (deprecated)
+/usr/share/applications/mimeapps.list or /usr/local/share/applications/mimeapps.list</code></pre><h2 id="mimeapps-list">mimeapps.list</h2><pre><code>[Added Associations]
+image/jpeg=bar.desktop;baz.desktop
+video/H264=bar.desktop
+[Removed Associations]
+video/H264=baz.desktop
+[Default Applications]
+image/jpeg=foo.desktop</code></pre><ul><li>每个程序用 desktop entries 来提供它可以处理的 mime 类型，系统通过这些 desktop entries 生成一份映射文件，存储在 <code>/usr/share/applications/mimeinfo.cache</code>。</li><li>mime 类型的枚举存储在 <code>/usr/share/mime/types</code></li></ul></body></html>
