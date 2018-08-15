@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><title>对象</title></head><body><h1 id="-">对象</h1><hr><h2 id="-">数据属性</h2><ul><li>Configurable，表示能否通过 delete 删除属性从而重新定义属性</li><li>Enumerable，表示能否通过 for-in 循环返回属性</li><li>Writable，表示能否修改属性的值</li><li>Value，包含这个属性的数据值</li><li>defineProperty() 可修改数据属性, 如果不指定，特性默认值为 false</li></ul><pre><code>Object.defineProperty(person, &#39;name&#39;, {
+  writable: false,
+  value: &#39;Nic&#39;,
+})</code></pre><h2 id="-">访问器属性</h2><ul><li>Configurable，表示能否通过 delete 删除属性从而重新定义属性</li><li>Enumerable，表示能否通过 for-in 循环返回属性</li><li>Get, 读取时调用的函数</li><li>Set, 写入时调用的函数</li></ul><h2 id="-">其它属性方法</h2><ul><li>defineProperties()</li><li>getOwnPropertyDescriptor(obj, prop)</li></ul><h2 id="-">对象方法</h2><ul><li>keys() 返回包含所有可枚举属性的字符串数组</li><li>getOwnPropertyNames() 返回所有实例属性，无论是否可枚举</li></ul><h2 id="-">原型</h2><ul><li>原型对象的 constructor 属性指向构造函数</li><li>构造函数的 prototype 属性指向原型对象</li><li>实例有内部属性指向原型对象</li><li>getPrototypeOf() 获取对象的原型</li><li>hasOwnProperty() 检测属性是实例的还是原型的</li><li>in/for-in 也会遍历原型属性</li></ul><pre><code>Person.prototype = {
+  sayName: function() {
+    console.log(this.name)
+  }
+}</code></pre><p>以上会将 constructor 属性设为 Object</p><pre><code>Person.prototype = {
+  constructor: Person,
+  sayName: function() {
+    console.log(this.name)
+  }
+}</code></pre><p>以上会将 constructor 属性设为可枚举</p><pre><code>Person.prototype = {
+  sayName: function() {
+    console.log(this.name)
+  }
+}
+
+Object.defineProperty(Person.prototype, &#39;constructor&#39;, {
+  enumerable: false,
+  value: Person,
+})</code></pre><h2 id="-">工厂模式</h2><pre><code>function createPerson(name) {
+  var o = new Object()
+  o.name = name
+  o.sayName = function() {
+    console.log(this.name)
+  }
+  return o
+}</code></pre><h2 id="-">构造函数模式</h2><pre><code>function Person(name) {
+  this.name = name
+  this.sayName = function() {
+    console.log(this.name)
+  }
+}</code></pre><h2 id="-">原型模式</h2><pre><code>function Person() {}
+
+Person.prototype.name = &#39;name&#39;
+Person.prototype.sayName = function() {
+  console.log(this.name)
+}</code></pre><h2 id="-">组合使用构造函数和原型模式</h2><pre><code>function Person(name) {
+  this.name = name
+}
+
+Person.prototype = {
+  constructor: Person,
+  sayName: function() {
+   console.log(this.name)
+  },
+}</code></pre><h2 id="-">动态原型模式</h2><pre><code>function Person(name) {
+  this.name = name
+
+  if (typeof this.sayName != &#39;function&#39;) {
+    Person.prototype.sayName = function() {
+      console.log(this.sayName)
+    }
+  }
+}</code></pre><h2 id="-">寄生构造函数模式</h2><pre><code>function Person(name) {
+  var o = new Object()
+  o.name = name
+  o.sayName = function() {
+    console.log(this.name)
+  }
+  return o
+}</code></pre><h2 id="-">稳妥构造函数模式</h2><pre><code>function Person(name) {
+  var o = new Object()
+  o.sayName = function() {
+    console.log(name)
+  }
+  return o
+}</code></pre></body></html>

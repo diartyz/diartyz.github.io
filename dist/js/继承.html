@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><title>继承</title></head><body><h1 id="-">继承</h1><hr><h2 id="-">借用构造函数</h2><pre><code>function SuperType() {
+  this.colors = [&#39;red&#39;, &#39;blue&#39;]
+}
+
+function SubType() {
+  SuperType.call(this)
+}</code></pre><h2 id="-">组合继承</h2><pre><code>function SuperType(name) {
+  this.name = name
+}
+
+SuperType.prototype.sayName = function() {
+  console.log(this.name)
+}
+
+function SubType(name, age) {
+  SuperType.call(this, name)
+  this.age = age
+}
+
+SubType.prototype = new SuperType()
+SubType.prototype.constructor = SubType
+SubType.prototype.sayAge = function() {
+  console.log(this.age)
+}</code></pre><h2 id="-">原型式继承</h2><pre><code>function object(o) {
+  function F() {}
+  F.prototype = o
+  return new F()
+}
+
+// or
+
+Object.create()</code></pre><h2 id="-">寄生式继承</h2><pre><code>function createAnother(o) {
+  var clone = object(o)
+  clone.sayHi = function() {
+    console.log(&#39;hi&#39;)
+  }
+  return clone
+}</code></pre><h2 id="-">寄生组合式继承</h2><pre><code>function inheritPrototype(subType, superType) {
+  var prototype = object(superType.prototype)
+  prototype.constructor = subType
+  subType.prototype = prototype
+}
+
+function SuperType(name) {
+  this.name = name
+}
+
+SuperType.prototype.sayName = function() {
+  console.log(this.name)
+}
+
+function SubType(name, age) {
+  SuperType.call(this, name)
+  this.age = age
+}
+
+inheritPrototype(SubType, SuperType)
+
+SubType.prototype.sayAge = function() {
+  console.log(this.age)
+}</code></pre></body></html>
