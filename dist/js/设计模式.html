@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bree+Serif"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"><link rel="stylesheet" href="../../static/main.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><title>设计模式</title></head><body><h1 id="-">设计模式</h1><hr><h2 id="-">单例模式</h2><pre><code class="language-javascript">function singleton(fn) {
+  let result
+  return function() {
+    return result || (result = fn())
+  }
+}</code></pre><h2 id="-">工厂模式</h2><pre><code class="language-javascript">function ObjectFactory() {
+  const obj = {}
+  const Constructor = Array.prototype.shift.call(arguments)
+
+  obj.__proto__ = Constructor.prototype
+  const ret = Constructor.apply(obj, arguments)
+
+  return typeof ret === &#39;object&#39; ? ret : obj
+}</code></pre><h2 id="-">观察者模式</h2><pre><code class="language-javascript">function Event() {
+  this.obj = {}
+}
+
+Event.prototype = {
+  constructor: Event,
+  listen: function (key, fn) {
+    const ref = this.obj[key]
+    const stack = ref ? ref : (this.obj[key] = [])
+
+    return stack.push(fn)
+  },
+  trigger: function (key) {
+    const ref = this.obj[key]
+    const stack = ref ? ref : (this.obj[key] = [])
+
+    for (let i = 0, len = stack.length; i &lt; len; i++) {
+      fn = stack[i]
+      fn(arguments)
+    }
+  }
+}</code></pre></body></html>
